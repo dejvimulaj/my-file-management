@@ -1,0 +1,51 @@
+{
+  "users": [
+    {
+      "email": "admin@test.com",
+      "password": "admin123",
+      "role": "admin"
+    },
+    {
+      "email": "user@test.com",
+      "password": "user123",
+      "role": "user"
+    }
+  ],
+  "folders": [
+    {
+      "id": 1,
+      "name": "Documents",
+      "parentId": null,
+      "createdAt": "2025-01-10T10:00:00Z",
+      "updatedAt": "2025-01-10T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Photos",
+      "parentId": null,
+      "createdAt": "2025-01-12T08:30:00Z",
+      "updatedAt": "2025-01-12T08:30:00Z"
+    }
+  ],
+
+  "files": [
+    {
+      "id": 1,
+      "name": "resume.pdf",
+      "folderId": 1,
+      "fileType": "application/pdf",
+      "fileSize": 102400,
+      "createdAt": "2025-01-10T10:15:00Z",
+      "updatedAt": "2025-01-10T10:15:00Z"
+    },
+    {
+      "id": 2,
+      "name": "photo1.jpg",
+      "folderId": 2,
+      "fileType": "image/jpeg",
+      "fileSize": 204800,
+      "createdAt": "2025-01-12T08:45:00Z",
+      "updatedAt": "2025-01-12T08:45:00Z"
+    }
+  ]
+}
