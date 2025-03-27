@@ -8,10 +8,10 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { fileReducer } from '../store/file.reducer';
 import { folderReducer } from '../store/folder.reducer';
-// import { provideEffects } from '@ngrx/effects';
-// import { AuthEffects } from '../store/auth.effects';
-// import { FileEffects } from '../store/file.effects';
-// import { FolderEffects } from '../store/folder.effects';
+import { provideEffects } from '@ngrx/effects';
+import { AuthEffects } from '../store/auth.effects';
+import { FileEffects } from '../store/file.effects';
+import { FolderEffects } from '../store/folder.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,6 +24,6 @@ export const appConfig: ApplicationConfig = {
       file: fileReducer,
       folder: folderReducer
     }),
-    // provideEffects([AuthEffects, FileEffects, FolderEffects]),
+    provideEffects([AuthEffects, FileEffects, FolderEffects]),
   ]
 };
