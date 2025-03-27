@@ -1,22 +1,22 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 import { RoleGuard } from './role.guard';
-import { LoginComponent } from './login/login.component';
+// import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminComponent } from './admin/admin.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  // { path: 'login', component: LoginComponent },
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard]  // User must be logged in
+    // canActivate: [AuthGuard]  // User must be logged in
   },
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [AuthGuard, RoleGuard], // User must be logged in and have the 'admin' role
+    // canActivate: [AuthGuard, RoleGuard], 
     data: { role: 'admin' }
   },
   { path: 'unauthorized', component: UnauthorizedComponent },
