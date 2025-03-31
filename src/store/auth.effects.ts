@@ -41,7 +41,7 @@ export class AuthEffects {
           message: 'Login was successful!',
           type: 'success'
         }, 3000);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/folders']);
       })
     ),
     { dispatch: false }

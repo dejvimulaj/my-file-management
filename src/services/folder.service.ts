@@ -33,4 +33,9 @@ export class FolderService {
   deleteFolder(folderId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${folderId}`);
   }
+
+    // Fetch folders for a given user
+    getFoldersByUser(userId: number): Observable<Folder[]> {
+      return this.http.get<Folder[]>(`${this.baseUrl}?userId=${userId}`);
+    }
 }

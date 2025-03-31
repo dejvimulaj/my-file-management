@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { File } from '../models/file.model';
 import { Observable } from 'rxjs';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -41,5 +40,9 @@ export class FileService {
   // Delete a file
   deleteFile(fileId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${fileId}`);
+  }
+
+  getFilesByUser(userId: number): Observable<File[]> {
+    return this.http.get<File[]>(`${this.baseUrl}?userId=${userId}`);
   }
 }

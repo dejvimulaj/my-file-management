@@ -1,0 +1,56 @@
+<h2 class="text-xl font-bold mb-4">My Folders</h2>
+<ul *ngIf="folders.length > 0; else noFolders">
+
+  <li
+    class="p-4 bg-gray-100 mb-4 rounded-xl"
+    *ngFor="let folder of folders"
+  >
+
+    <div class="flex items-center justify-between cursor-pointer" (click)="toggleFolder(folder)">
+      <div class="flex items-center w-[600px]">
+        <span class="text-2xl mr-3">📁</span>
+        <p class="mt-1 font-bold text-lg">{{ folder.name }}</p>
+      </div>
+      <p>Created on: {{ folder.createdAt | date:'shortDate' }}</p>
+      <p>Size:</p>
+      <div class="flex">
+        <button class="ml-4 text-white text-2xl rounded-full hover:bg-amber-100 cursor-pointer transition duration-300">
+          ✏️
+        </button>
+        <button class="ml-4 text-white text-2xl rounded-full hover:bg-red-200 cursor-pointer transition duration-300">
+          🚫
+        </button>
+      </div>
+    </div>
+
+    <ul class="mt-5 ml-8" *ngIf="isFolderOpen(folder)">
+      <li
+        class="p-2 bg-white mb-2 rounded-full "
+        *ngFor="let file of getFilesForFolder(folder.id!)"
+      >
+      <div class="flex items-center justify-between cursor-pointer">
+          <div class="flex items-center w-[600px]">
+              <span class="text-xl mr-3">📄</span>
+              <p class="font-medium text-lg">{{ file.name }}</p>
+          </div>
+          <p>{{file.fileSize}}KB</p>
+          <p>{{file.fileType}}</p>
+          <div class="flex">
+            <button class=" mr-4 text-white text-2xl rounded-full hover:bg-red-200 cursor-pointer transition duration-300">
+                🗑️
+            </button>
+         </div>
+      </div>
+
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<ng-template #noFiles>
+    <p>No Files found in this folder yet.</p>
+  </ng-template>
+
+<ng-template #noFolders>
+  <p>No folders found for this user.</p>
+</ng-template>

@@ -7,6 +7,7 @@ import { AdminComponent } from './admin/admin.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { RegisterComponent } from './register/register.component';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
+import { FoldersComponent } from './folders/folders.component';
 
 export const routes: Routes = [
   // Public routes outside of the main layout
@@ -18,8 +19,9 @@ export const routes: Routes = [
     path: '',
     component: MainLayoutComponent,
     children: [
-      { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
       { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { role: 'admin' } },
+      { path: 'folders', component: FoldersComponent, canActivate: [AuthGuard] },
+      { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
       // Use relative redirect so it doesn't cause an infinite loop
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: '**', redirectTo: 'dashboard' },
