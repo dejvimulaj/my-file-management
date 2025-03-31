@@ -1,25 +1,30 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
-import { RoleGuard } from './role.guard';
-// import { LoginComponent } from './login/login.component';
+// import { RoleGuard } from './role.guard';
+import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminComponent } from './admin/admin.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { RegisterComponent } from './register/register.component';
+import { MainLayoutComponent } from './main-layout/main-layout.component';
 
 export const routes: Routes = [
-  // { path: 'login', component: LoginComponent },
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-    // canActivate: [AuthGuard]  // User must be logged in
-  },
-  {
-    path: 'admin',
-    component: AdminComponent,
-    // canActivate: [AuthGuard, RoleGuard], 
-    data: { role: 'admin' }
-  },
+  // Public routes outside of the main layout
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'unauthorized', component: UnauthorizedComponent },
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: '**', redirectTo: '/dashboard' }
+  // Main layout for authenticated routes
+  {
+    path: '',
+    component: MainLayoutComponent,
+    children: [
+      { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+      { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { role: 'admin' } },
+      // Use relative redirect so it doesn't cause an infinite loop
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '**', redirectTo: 'dashboard' },
+    ]
+  },
+  // Fallback if nothing matches
+  { path: '**', redirectTo: 'login' }
 ];

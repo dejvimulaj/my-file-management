@@ -1,13 +1,25 @@
 {
   "users": [
     {
+      "id": 1,
       "email": "admin@test.com",
-      "password": "admin123",
-      "role": "admin"
+      "password": "admin123"
     },
     {
+      "id": 2,
       "email": "user@test.com",
-      "password": "user123",
+      "password": "$2a$12$/Zyd5yGPDoz4UvdySA.JH.GUkEFNOCkxsvAyfceLeGKxQEtHwcQDC"
+    },
+    {
+      "id": 3,
+      "email": "test@test.com",
+      "password": "$2a$10$5E6Mdc7w7WgPwER27RZiSu8nKI4gPHWyGY1aRuDVQEPLnk6Gsf4hm",
+      "role": "user"
+    },
+    {
+      "id": 4,
+      "email": "dave@gmail.com",
+      "password": "$2a$10$W9D0K3r0.Lr.ahg1BDca7O5DVse8E8HDfb0UjPznj8pRX9JrmS46K",
       "role": "user"
     }
   ],
@@ -16,6 +28,7 @@
       "id": 1,
       "name": "Documents",
       "parentId": null,
+      "userId": 4,
       "createdAt": "2025-01-10T10:00:00Z",
       "updatedAt": "2025-01-10T10:00:00Z"
     },
@@ -23,16 +36,17 @@
       "id": 2,
       "name": "Photos",
       "parentId": null,
+      "userId": 4,
       "createdAt": "2025-01-12T08:30:00Z",
       "updatedAt": "2025-01-12T08:30:00Z"
     }
   ],
-
   "files": [
     {
       "id": 1,
       "name": "resume.pdf",
       "folderId": 1,
+      "userId": 4,
       "fileType": "application/pdf",
       "fileSize": 102400,
       "createdAt": "2025-01-10T10:15:00Z",
@@ -42,6 +56,7 @@
       "id": 2,
       "name": "photo1.jpg",
       "folderId": 2,
+      "userId": 4,
       "fileType": "image/jpeg",
       "fileSize": 204800,
       "createdAt": "2025-01-12T08:45:00Z",

@@ -1,10 +1,10 @@
 import { createAction, props } from '@ngrx/store';
 import { File } from '../models/file.model';
 
-// Load files (optionally filtered by folder)
+// Load files filtered by user (and optionally by folder)
 export const loadFiles = createAction(
   '[File] Load Files',
-  props<{ folderId?: number }>()
+  props<{ userId: number; folderId?: number }>()
 );
 
 export const loadFilesSuccess = createAction(
@@ -17,10 +17,10 @@ export const loadFilesFailure = createAction(
   props<{ error: any }>()
 );
 
-// Create a new file
+// Create a new file, including userId to set ownership
 export const addFile = createAction(
   '[File] Add File',
-  props<{ file: File }>()
+  props<{ file: File; userId: number }>()
 );
 
 export const addFileSuccess = createAction(

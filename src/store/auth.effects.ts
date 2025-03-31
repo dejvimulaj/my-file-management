@@ -1,16 +1,18 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as AuthActions from './auth.actions';
 import { AuthService } from '../services/auth.service';
-import { mergeMap, map, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Router } from '@angular/router';
+import { ToastService } from '../services/toast.service';
 
 @Injectable()
 export class AuthEffects {
-  constructor(
-    private actions$: Actions,
-    private authService: AuthService
-  ) {console.log('AuthEffects constructed, actions$: ', actions$);}
+  private actions$ = inject(Actions);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private toastService = inject(ToastService);
 
   login$ = createEffect(() =>
     this.actions$.pipe(
@@ -18,7 +20,6 @@ export class AuthEffects {
       mergeMap(action =>
         this.authService.login(action.email, action.password).pipe(
           map(res => {
-            // The response shape is { accessToken, user: { email, role, id } }
             return AuthActions.loginSuccess({
               token: res.accessToken,
               user: res.user
@@ -29,6 +30,23 @@ export class AuthEffects {
       )
     )
   );
+
+    loginRedirect$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.loginSuccess),
+      tap((action) => {
+        localStorage.setItem('auth', JSON.stringify({ token: action.token, user: action.user }));
+        this.toastService.showToast({
+          title: 'Welcome',
+          message: 'Login was successful!',
+          type: 'success'
+        }, 3000);
+        this.router.navigate(['/home']);
+      })
+    ),
+    { dispatch: false }
+  );
+
 
   register$ = createEffect(() =>
     this.actions$.pipe(
@@ -44,4 +62,37 @@ export class AuthEffects {
       )
     )
   );
+  
+  registerRedirect$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.registerUserSuccess),
+      tap(() => {
+        this.toastService.showToast({
+          title: 'Success',
+          message: 'You are now registered!',
+          type: 'success'
+        }, 3000);
+        this.router.navigate(['/home']);
+      })
+    ),
+    { dispatch: false }
+  );
+
+  errorToast$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.loginFailure, AuthActions.registerUserFailure),
+      tap(({ error }) => {
+        this.toastService.showToast({
+          title: 'Error',
+          message: error?.message || 'An error occurred!',
+          type: 'error'
+        }, 3000);
+      })
+    ),
+    { dispatch: false }
+  );
 }
+
+
+
+

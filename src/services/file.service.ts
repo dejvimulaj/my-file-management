@@ -11,19 +11,24 @@ export class FileService {
 
   constructor(private http: HttpClient) {}
 
-  // Fetch files (optionally by folder ID)
-  getFiles(folderId?: number): Observable<File[]> {
-    if (folderId) {
-      // Query: /files?folderId=theId
-      return this.http.get<File[]>(`${this.baseUrl}?folderId=${folderId}`);
+  // Fetch files optionally filtered by folderId and userId
+  getFiles(folderId?: number, userId?: number): Observable<File[]> {
+    const queryParams: string[] = [];
+    if (folderId !== undefined) {
+      queryParams.push(`folderId=${folderId}`);
     }
-    return this.http.get<File[]>(this.baseUrl);
+    if (userId !== undefined) {
+      queryParams.push(`userId=${userId}`);
+    }
+    const queryString = queryParams.length ? `?${queryParams.join('&')}` : '';
+    return this.http.get<File[]>(`${this.baseUrl}${queryString}`);
   }
 
-  // Create a new file (storing only metadata)
-  createFile(file: File): Observable<File> {
+  // Create a new file (storing only metadata) and include the userId
+  createFile(file: File, userId: number): Observable<File> {
     file.createdAt = new Date().toISOString();
     file.updatedAt = file.createdAt;
+    file.userId = userId; // Ensure the file is associated with the current user
     return this.http.post<File>(this.baseUrl, file);
   }
 

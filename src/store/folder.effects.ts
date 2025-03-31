@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as FolderActions from './folder.actions';
 import { FolderService } from '../services/folder.service';
@@ -7,10 +7,10 @@ import { of } from 'rxjs';
 
 @Injectable()
 export class FolderEffects {
-  constructor(
-    private actions$: Actions,
-    private folderService: FolderService
-  ) {}
+
+  private actions$ = inject(Actions);
+    private folderService= inject(FolderService);
+
 
   // Load folders
   loadFolders$ = createEffect(() =>
