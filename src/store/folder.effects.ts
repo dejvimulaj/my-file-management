@@ -31,7 +31,9 @@ export class FolderEffects {
       ofType(FolderActions.addFolder),
       mergeMap(action =>
         this.folderService.createFolder(action.folder).pipe(
-          map(folder => FolderActions.addFolderSuccess({ folder })),
+          map(createdFolder =>
+            FolderActions.addFolderSuccess({ folder: createdFolder })
+          ),
           catchError(error => of(FolderActions.addFolderFailure({ error })))
         )
       )

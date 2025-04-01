@@ -1,26 +1,34 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FolderService } from '../../services/folder.service';
 import { Store } from '@ngrx/store';
-import { Observable, switchMap } from 'rxjs';
-import { AuthState } from '../../store/auth.reducer'; // example path
+import { tap } from 'rxjs/operators';
+
+import { AuthState } from '../../store/auth.reducer';
+import { FolderService } from '../../services/folder.service';
+import { FileService } from '../../services/file.service';
+
 import { Folder } from '../../models/folder.model';
 import { File } from '../../models/file.model';
-import { FileService } from '../../services/file.service';
+import { loadFolders } from '../../store/folder.actions';
+import { Observable } from 'rxjs';
+import { selectAllFolders } from '../../store/folder.selectors';
 
 @Component({
   selector: 'app-folders',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './folders.component.html',
-  styleUrl: './folders.component.scss'
+  styleUrls: ['./folders.component.scss']
 })
 export class FoldersComponent implements OnInit {
-  folders: Folder[] = [];
-  files: File[] = [];
-  userId = 4; // Example user ID; get from local storage / auth as needed
+  // Holds the current user's ID. We get this from the store, so initially null.
+  userId: number | null = null;
 
-  // Which folders are open (expanded)
+  folders: Folder[] = [];
+  folders$!: Observable<Folder[]>;
+  files: File[] = [];
+
+  // Controls open/close states for folders
   openState: { [folderId: number]: boolean } = {};
 
   // Tracks selected folders and files
@@ -28,50 +36,75 @@ export class FoldersComponent implements OnInit {
   selectedFiles: File[] = [];
 
   constructor(
+    private authStore: Store<{ auth: AuthState }>,  // We'll select userId from here
     private folderService: FolderService,
-    private fileService: FileService
+    private fileService: FileService,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
-    // Load all folders and files for userId
-    this.folderService.getFoldersByUser(this.userId).subscribe({
+    // 1) Get the userId from auth state.
+    // 2) Once we have a userId, call folderService and fileService to fetch data.
+    this.authStore
+      .select(state => state.auth.user?.id)
+      .pipe(
+        tap(uid => {
+          this.userId = uid ?? null;
+          console.log('Got user ID from store:', this.userId);
+
+          // If we do have a userId, fetch folders and files
+          if (this.userId !== null) {
+            this.store.dispatch(loadFolders({ userId: this.userId }));
+            this.loadFoldersAndFiles(this.userId);
+          }
+        })
+      )
+      .subscribe();
+      this.folders$ = this.store.select(selectAllFolders);
+  }
+
+  // Helper method to fetch folders/files once userId is known
+  private loadFoldersAndFiles(uid: number) {
+    // Folders
+    this.folderService.getFoldersByUser(uid).subscribe({
       next: (res) => (this.folders = res),
       error: (err) => console.error('Error fetching folders:', err),
     });
 
-    this.fileService.getFilesByUser(this.userId).subscribe({
+    // Files
+    this.fileService.getFilesByUser(uid).subscribe({
       next: (res) => (this.files = res),
       error: (err) => console.error('Error fetching files:', err),
     });
   }
 
-  // Toggle folder open/close
+  // -------------------------------------------
+  // Folder Accordion Logic
+  // -------------------------------------------
   toggleFolder(folder: Folder) {
     const isOpen = this.openState[folder.id!] ?? false;
     this.openState[folder.id!] = !isOpen;
   }
 
-  // Check if folder is open
   isFolderOpen(folder: Folder): boolean {
     return this.openState[folder.id!] || false;
   }
 
-  // Return folders that have parentId = null
   getTopLevelFolders(): Folder[] {
     return this.folders.filter((f) => f.parentId === null);
   }
 
-  // Return child folders of a given folder
   getChildFolders(folderId: number): Folder[] {
     return this.folders.filter((f) => f.parentId === folderId);
   }
 
-  // Return files that belong to a given folder
   getFilesForFolder(folderId: number): File[] {
     return this.files.filter((file) => file.folderId === folderId);
   }
 
-  // Folder selection
+  // -------------------------------------------
+  // Selection Logic
+  // -------------------------------------------
   toggleFolderSelection(folder: Folder) {
     const index = this.selectedFolders.findIndex((f) => f.id === folder.id);
     if (index > -1) {
@@ -86,7 +119,6 @@ export class FoldersComponent implements OnInit {
     return this.selectedFolders.some((f) => f.id === folder.id);
   }
 
-  // File selection
   toggleFileSelection(file: File) {
     const index = this.selectedFiles.findIndex((f) => f.id === file.id);
     if (index > -1) {
@@ -101,6 +133,9 @@ export class FoldersComponent implements OnInit {
     return this.selectedFiles.some((f) => f.id === file.id);
   }
 
+  // -------------------------------------------
+  // File Icons by Type
+  // -------------------------------------------
   getIconForFile(fileType: string): string {
     switch (fileType) {
       case 'application/pdf':

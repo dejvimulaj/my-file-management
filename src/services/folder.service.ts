@@ -18,8 +18,6 @@ export class FolderService {
 
   // Create a new folder
   createFolder(folder: Folder): Observable<Folder> {
-    folder.createdAt = new Date().toISOString();
-    folder.updatedAt = folder.createdAt;
     return this.http.post<Folder>(this.baseUrl, folder);
   }
 

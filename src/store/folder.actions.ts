@@ -2,7 +2,10 @@ import { createAction, props } from '@ngrx/store';
 import { Folder } from '../models/folder.model';
 
 // Load all folders.
-export const loadFolders = createAction('[Folder] Load Folders');
+export const loadFolders = createAction(
+  '[Folder] Load Folders',
+  props<{ userId: number }>()
+);
 
 export const loadFoldersSuccess = createAction(
   '[Folder] Load Folders Success',

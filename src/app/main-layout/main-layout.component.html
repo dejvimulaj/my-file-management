@@ -1,143 +1,216 @@
 <div class="flex flex-col h-screen">
-    <!-- Navbar: full width, 20px tall -->
-    <div class="h-16 bg-gray-100 flex items-center justify-between px-4">
-     <h1 class="ml-3 mt-3 text-3xl font-bold text-sky-800">
-        FMS Drive
-     </h1>
-            <div class="relative max-w-[460px] w-full mt-2">
-                <input autocomplete="off" type="text" name="q" class="w-full h-12 bg-gray-200 focus:bg-white shadow-cyan-800/50 shadow-sm focus:shadow-md p-4 rounded-full focus:outline-none focus:ring-0" placeholder="Search for file or folder" />                <button type="submit">
-                    <svg class="text-sky-700 h-5 w-5 absolute top-3.5 right-3 fill-current dark:text-teal-300"
-                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
-                        x="0px" y="0px" viewBox="0 0 56.966 56.966"
-                        style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve">
-                        <path
-                            d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z">
-                        </path>
-                    </svg>
-                </button>
-
-            </div>
-            <div class="mt-1">
-                <div class="flex items-center mr-3 rounded-2xl hover:bg-gray-200 cursor-pointer p-1">
-                    <div class="relative">
-                        <div class="h-10 w-10 rounded-full bg-cyan-800" ></div>
-                        
-                    </div>
-                    <div class="ml-2">
-                        <h2 class="font-bold text-gray-800 text-md">Dave Test</h2>
-                        <p class="text-gray-600">dave&#64;gmail.com</p>
-                    </div>
-                </div>
-            </div>
+  <!-- Navbar: full width, 20px tall -->
+  <div class="h-16 bg-gray-100 flex items-center justify-between px-4">
+    <h1 class="ml-3 mt-3 text-3xl font-bold text-sky-800">FMS Drive</h1>
+    <div class="relative max-w-[460px] w-full mt-2">
+      <input
+        autocomplete="off"
+        type="text"
+        name="q"
+        class="w-full h-12 bg-gray-200 focus:bg-white shadow-cyan-800/50 shadow-sm focus:shadow-md p-4 rounded-full focus:outline-none focus:ring-0"
+        placeholder="Search for file or folder"
+      />
+      <button type="submit">
+        <svg
+          class="text-sky-700 h-5 w-5 absolute top-3.5 right-3 fill-current dark:text-teal-300"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          version="1.1"
+          x="0px"
+          y="0px"
+          viewBox="0 0 56.966 56.966"
+          style="enable-background: new 0 0 56.966 56.966"
+          xml:space="preserve"
+        >
+          <path
+            d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z"
+          ></path>
+        </svg>
+      </button>
     </div>
-    <!-- Content area: Sidebar and Main Content -->
-    <div class="flex flex-1">
-        
-        <!-- Sidebar: empty div for spacing -->
-        <div class="w-64 bg-gray-100">
-            <div class="bg-white hover:bg-blue-100 cursor-pointer rounded-3xl shadow-sky-800/50 shadow-lg mt-8 ml-5 mr-24 p-1 flex items-center justify-between" (click)="onNewClick()">   
-                <p class="text-sky-800 ml-7 font-bold text-lg text-center">
-                New
-                </p>
-                <span class="mr-8 text-sky-800 text-5xl mb-[9px]">+</span>
-            </div>
-            <nav class="mt-10">
-                <ul>
-                  <li class="mb-4">
-                    <a
-                      routerLink="/home"
-                      routerLinkActive="font-bold bg-gray-300"
-                      class="block px-3 py-2 cursor-pointer font-bold text-lg  rounded-full ml-3 mr-3 hover:bg-gray-300 transition-colors"
-                    >
-                    <p class="ml-5">
-                      🏠 Home
-                    </p>
-                    </a>
-                  </li>
-                  <li class="mb-4">
-                    <a
-                      routerLink="/home"
-                      routerLinkActive="font-bold bg-gray-300"
-                      class="block px-3 py-2 cursor-pointer font-bold text-lg  rounded-full ml-3 mr-3 hover:bg-gray-300 transition-colors"
-                    >
-                    <p class="ml-5">
-                      📈 Dashboard
-                    </p>
-                    </a>
-                  </li>
-                  <li class="mb-4">
-                    <a
-                      routerLink="/home"
-                      routerLinkActive="font-bold bg-gray-300"
-                      class="block px-3 py-2 cursor-pointer font-bold text-lg rounded-full ml-3 mr-3 hover:bg-gray-300 transition-colors"
-                    >
-                    <p class="ml-5">
-                      📂 Folders
-                    </p>
-                    </a>
-                  </li>
-                  <li class="mb-4">
-                    <a
-                      routerLink="/home"
-                      routerLinkActive="font-bold bg-gray-300"
-                      class="block px-3 py-2 cursor-pointer font-bold text-lg rounded-full ml-3 mr-3 hover:bg-gray-300 transition-colors"
-                    >
-                    <p class="ml-5">
-                      📃 Files
-                    </p>
-                    </a>
-                  </li>
-                  <li class="mb-4 mt-20">
-                    <a
-                      (click)="onLogout()"
-                      routerLinkActive="font-bold bg-gray-300"
-                      class="block px-3 py-2 cursor-pointer font-bold text-lg rounded-full ml-3 mr-3 hover:bg-gray-300 transition-colors"
-                    >
-                    <p class="ml-5">
-                      🔒 Logout
-                    </p>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+    <div class="mt-1">
+      <div
+        class="flex items-center mr-3 rounded-2xl hover:bg-gray-200 cursor-pointer p-1"
+      >
+        <div class="relative">
+          <div class="h-10 w-10 rounded-full bg-cyan-800"></div>
         </div>
-      <div class="flex-1 p-4 bg-white rounded-t-2xl shadow-sky-800/50 shadow-lg mr-10 mt-2">
-        <router-outlet></router-outlet>
+        <div class="ml-2">
+          <h2 class="font-bold text-gray-800 text-md">Dave Test</h2>
+          <p class="text-gray-600">dave&#64;gmail.com</p>
+        </div>
       </div>
     </div>
+  </div>
+  <!-- Content area: Sidebar and Main Content -->
+  <div class="flex flex-1">
+    <!-- Sidebar: empty div for spacing -->
+    <div class="w-64 bg-gray-100">
+      <div
+        class="bg-white hover:bg-blue-100 cursor-pointer rounded-3xl shadow-sky-800/50 shadow-lg mt-8 ml-5 mr-24 p-1 flex items-center justify-between"
+        (click)="onNewClick()"
+      >
+        <p class="text-sky-800 ml-7 font-bold text-lg text-center">New</p>
+        <span class="mr-8 text-sky-800 text-5xl mb-[9px]">+</span>
+      </div>
+      <nav class="mt-10">
+        <ul>
+          <li class="mb-4">
+            <a
+              routerLink="/home"
+              routerLinkActive="font-bold bg-gray-300"
+              class="block px-3 py-2 cursor-pointer font-bold text-lg rounded-full ml-3 mr-3 hover:bg-gray-300 transition-colors"
+            >
+              <p class="ml-5">🏠 Home</p>
+            </a>
+          </li>
+          <li class="mb-4">
+            <a
+              routerLink="/home"
+              routerLinkActive="font-bold bg-gray-300"
+              class="block px-3 py-2 cursor-pointer font-bold text-lg rounded-full ml-3 mr-3 hover:bg-gray-300 transition-colors"
+            >
+              <p class="ml-5">📈 Dashboard</p>
+            </a>
+          </li>
+          <li class="mb-4">
+            <a
 
+              routerLinkActive="font-bold bg-gray-300"
+              class="block px-3 py-2 cursor-pointer font-bold text-lg rounded-full ml-3 mr-3 hover:bg-gray-300 transition-colors"
+            >
+              <p class="ml-5">📂 Folders</p>
+            </a>
+          </li>
+          <li class="mb-4">
+            <a
+            (click)="chooseFile()"
+              routerLinkActive="font-bold bg-gray-300"
+              class="block px-3 py-2 cursor-pointer font-bold text-lg rounded-full ml-3 mr-3 hover:bg-gray-300 transition-colors"
+            >
+              <p class="ml-5">📃 Files</p>
+            </a>
+          </li>
+          <li class="mb-4 mt-20">
+            <a
+              (click)="onLogout()"
+              routerLinkActive="font-bold bg-gray-300"
+              class="block px-3 py-2 cursor-pointer font-bold text-lg rounded-full ml-3 mr-3 hover:bg-gray-300 transition-colors"
+            >
+              <p class="ml-5">🔒 Logout</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
     <div
+      class="flex-1 p-4 bg-white rounded-t-2xl shadow-sky-800/50 shadow-lg mr-10 mt-2"
+    >
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  <div
     class="fixed inset-0 bg-black/40 backdrop-brightness-50 flex items-center justify-center"
     *ngIf="showNewModal"
     (click)="closeModal()"
   >
     <!-- Modal container -->
-    <div class="bg-white px-6 py-16 rounded-2xl shadow-xl w-80"
-    (click)="$event.stopPropagation()">
-      <h2 class="text-xl font-bold mb-6 text-center">Create New</h2>
-      <p class="mb-6 text-center text-gray-600">
-        Choose what you want to create
-      </p>
-      <div class="flex justify-around">
-        <button
-          class="bg-cyan-800 text-white px-4 py-2 rounded-full hover:bg-sky-600 transition"
-          (click)="createFolder()"
-        >
-        📁 Folder
-        </button>
-        <button
-          class="bg-cyan-700 text-white px-[26px] py-2 rounded-full hover:bg-teal-600 transition"
-          (click)="createFile()"
-        >
-        📄 File
-        </button>
-      </div>
-      <button
-        class="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
-        (click)="closeModal()"
-      >
+    <div
+      class="bg-white px-6 py-16 rounded-2xl shadow-xl w-80"
+      (click)="$event.stopPropagation()"
+    >
+      <ng-container [ngSwitch]="modalState">
+        <div *ngSwitchCase="'choice'" class="text-center">
+          <h2 class="text-xl font-bold mb-6 text-center">Create New</h2>
+          <p class="mb-6 text-center text-gray-600">
+            Choose what you want to create
+          </p>
+          <div class="flex justify-around">
+            <button
+              class="bg-cyan-800 text-white px-4 py-2 cursor-pointer rounded-full hover:bg-sky-600 transition"
+              (click)="chooseFolder()"
+            >
+              📁 Folder
+            </button>
+            <button
+              class="bg-cyan-700 text-white px-[26px] py-2 cursor-pointer rounded-full hover:bg-teal-600 transition"
+              (click)="chooseFile()"
+            >
+              📄 File
+            </button>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'folder'">
+          <h2 class="text-xl font-bold mb-4 text-center">Create Folder</h2>
+          <input
+            type="text"
+            class="w-full border border-gray-100 shadow-md shadow-slate-300 rounded-full focus:outline-none  px-3 py-2 mb-5"
+            placeholder="Folder Name"
+            [(ngModel)]="newFolderName"
+          />
+          <div class="flex justify-end space-x-2">
+            <button
+              class="bg-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-400 transition"
+              (click)="cancelFolder()"
+            >
+              Cancel
+            </button>
+            <button
+              class="bg-cyan-800 text-white px-6 py-2 rounded-full hover:bg-green-600 transition"
+              (click)="createFolder()"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'file'">
+          <h2 class="text-xl font-bold mb-4 text-center">Upload File</h2>
+
+
+          <label class="block mb-2 text-gray-600  font-medium">Choose Folder:</label>
+          <select
+            class="mb-4 w-full border border-gray-300 focus:outline-none focus:shadow-outline-blue rounded-3xl px-3 py-2 hover:bg-slate-100"
+            [(ngModel)]="selectedFolderId"
+          >
+            <option [ngValue]="null">-- 🗂️ Select Folder --</option>
+            <option
+              *ngFor="let folder of folders"
+              [ngValue]="folder.id"
+            >
+            📂{{ folder.name }}
+            </option>
+          </select>
+
+
+          <input
+            type="file"
+            class="mb-4 w-full border border-gray-300 file:bg-slate-400 file:text-white file:p-1 file:rounded-full file:px-3 focus:outline-none focus:shadow-outline-blue rounded-3xl px-3 py-2 file:cursor-pointer file:mr-3 overflow-x-hidden"
+            (change)="onFileSelected($event)"
+          />
+
+
+          <div class="flex justify-end space-x-2">
+            <button
+              class="bg-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-400 transition"
+              (click)="cancelFile()"
+            >
+              Cancel
+            </button>
+            <button
+              class="bg-cyan-800 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition"
+              (click)="saveFile()"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </ng-container>
+      <button class="absolute top-4 right-4 text-gray-500 hover:text-gray-800">
         ✕
       </button>
     </div>
   </div>
-  </div>
+</div>
