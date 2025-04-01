@@ -30,7 +30,7 @@
       >
       <div class="flex items-center justify-between cursor-pointer">
           <div class="flex items-center w-[600px]">
-              <span class="text-xl mr-3">📄</span>
+              <span class="text-xl mr-3">{{ getIconForFile(file.fileType) }}</span>
               <p class="font-medium text-lg">{{ file.name }}</p>
           </div>
           <p>{{file.fileSize}}KB</p>

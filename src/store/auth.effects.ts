@@ -91,6 +91,16 @@ export class AuthEffects {
     ),
     { dispatch: false }
   );
+
+  logout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.logout),
+      tap(() => {
+        localStorage.removeItem('auth');
+        this.router.navigate(['/login']);
+      })
+    )
+  , { dispatch: false });
 }
 
 

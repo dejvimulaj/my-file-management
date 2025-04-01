@@ -100,4 +100,23 @@ export class FoldersComponent implements OnInit {
   isFileSelected(file: File): boolean {
     return this.selectedFiles.some((f) => f.id === file.id);
   }
+
+  getIconForFile(fileType: string): string {
+    switch (fileType) {
+      case 'application/pdf':
+        return '📄'; // PDF icon (emoji)
+      case 'application/msword':
+      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        return '📝'; // Word Doc
+      case 'image/jpeg':
+      case 'image/png':
+      case 'image/gif':
+        return '🖼️'; // Image icon
+      case 'application/vnd.ms-excel':
+      case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+        return '📊'; // Excel
+      default:
+        return '📄'; // Generic file
+    }
+  }
 }
