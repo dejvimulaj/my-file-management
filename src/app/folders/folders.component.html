@@ -14,10 +14,14 @@
       <p>Created on: {{ folder.createdAt | date:'shortDate' }}</p>
       <p>Size:</p>
       <div class="flex">
-        <button class="ml-4 text-white text-2xl rounded-full hover:bg-amber-100 cursor-pointer transition duration-300">
+        <button class="ml-4 text-white text-2xl rounded-full hover:bg-amber-100 cursor-pointer transition duration-300"
+        (click)="openRenameModal(folder)"
+        >
           ✏️
         </button>
-        <button class="ml-4 text-white text-2xl rounded-full hover:bg-red-200 cursor-pointer transition duration-300">
+        <button class="ml-4 text-white text-2xl rounded-full hover:bg-red-200 cursor-pointer transition duration-300"
+        (click)="openDeleteModal(folder)"
+        >
           🚫
         </button>
       </div>
@@ -46,6 +50,73 @@
     </ul>
   </li>
 </ul>
+
+<div
+  class="fixed inset-0 bg-black/40 flex items-center justify-center"
+  *ngIf="renameModalOpen"
+  (click)="closeRenameModal()"
+>
+  <div
+    class="bg-white p-6 rounded shadow-xl w-80 relative"
+    (click)="$event.stopPropagation()"
+  >
+    <button class="absolute top-4 right-4" (click)="closeRenameModal()">✕</button>
+    <h2 class="text-xl font-bold mb-4 text-center">Rename Folder</h2>
+    <input
+      type="text"
+      [(ngModel)]="updatedFolderName"
+      class="w-full border border-gray-300 rounded px-3 py-2 mb-4"
+    />
+    <div class="flex justify-end space-x-2">
+      <button
+        class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+        (click)="closeRenameModal()"
+      >
+        Cancel
+      </button>
+      <button
+        class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+        (click)="saveRename()"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div
+  class="fixed inset-0 bg-black/40 flex items-center justify-center"
+  *ngIf="deleteModalOpen"
+  (click)="closeDeleteModal()"
+>
+  <div
+    class="bg-white p-6 rounded shadow-xl w-80 relative"
+    (click)="$event.stopPropagation()"
+  >
+    <button class="absolute top-4 right-4" (click)="closeDeleteModal()">✕</button>
+    <h2 class="text-xl font-bold mb-4 text-center">Confirm Delete</h2>
+    <p class="text-center mb-6">
+      Are you sure you want to delete<br>
+      <strong>📁{{ folderToDelete?.name }}</strong>?
+    </p>
+    <div class="flex justify-end space-x-2">
+      <button
+        class="bg-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-400"
+        (click)="closeDeleteModal()"
+      >
+        Cancel
+      </button>
+      <button
+        class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600"
+        (click)="confirmDelete()"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+
 
 <ng-template #noFiles>
     <p>No Files found in this folder yet.</p>

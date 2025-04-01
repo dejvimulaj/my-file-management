@@ -6,17 +6,18 @@ import { tap } from 'rxjs/operators';
 import { AuthState } from '../../store/auth.reducer';
 import { FolderService } from '../../services/folder.service';
 import { FileService } from '../../services/file.service';
-
+import * as FolderActions from '../../store/folder.actions';
 import { Folder } from '../../models/folder.model';
 import { File } from '../../models/file.model';
 import { loadFolders } from '../../store/folder.actions';
 import { Observable } from 'rxjs';
 import { selectAllFolders } from '../../store/folder.selectors';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-folders',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './folders.component.html',
   styleUrls: ['./folders.component.scss']
 })
@@ -27,6 +28,14 @@ export class FoldersComponent implements OnInit {
   folders: Folder[] = [];
   folders$!: Observable<Folder[]>;
   files: File[] = [];
+
+  renameModalOpen = false;
+  folderToEdit: Folder | null = null;
+  updatedFolderName = '';
+
+  deleteModalOpen = false;
+  folderToDelete: Folder | null = null;
+
 
   // Controls open/close states for folders
   openState: { [folderId: number]: boolean } = {};
@@ -153,5 +162,51 @@ export class FoldersComponent implements OnInit {
       default:
         return '📄'; // Generic file
     }
+  }
+
+  openRenameModal(folder: Folder) {
+    this.folderToEdit = { ...folder };  // make a copy
+    this.updatedFolderName = folder.name;
+    this.renameModalOpen = true;
+  }
+
+  closeRenameModal() {
+    this.renameModalOpen = false;
+    this.folderToEdit = null;
+    this.updatedFolderName = '';
+  }
+
+  saveRename() {
+    if (!this.folderToEdit) return;
+    if (!this.updatedFolderName.trim()) {
+      alert('Folder name cannot be empty');
+      return;
+    }
+
+    // Dispatch updateFolder with new name
+    const updated = {
+      ...this.folderToEdit,
+      name: this.updatedFolderName,
+      updatedAt: new Date().toISOString()
+    };
+
+    this.store.dispatch(FolderActions.updateFolder({ folder: updated }));
+    this.closeRenameModal();
+  }
+
+  openDeleteModal(folder: Folder) {
+    this.folderToDelete = folder;
+    this.deleteModalOpen = true;
+  }
+
+  closeDeleteModal() {
+    this.deleteModalOpen = false;
+    this.folderToDelete = null;
+  }
+
+  confirmDelete() {
+    if (!this.folderToDelete) return;
+    this.store.dispatch(FolderActions.deleteFolder({ folderId: this.folderToDelete.id! }));
+    this.closeDeleteModal();
   }
 }

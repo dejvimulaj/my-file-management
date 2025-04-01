@@ -23,7 +23,6 @@ export class FolderService {
 
   // Update an existing folder
   updateFolder(folderId: number, changes: Partial<Folder>): Observable<Folder> {
-    changes.updatedAt = new Date().toISOString();
     return this.http.patch<Folder>(`${this.baseUrl}/${folderId}`, changes);
   }
 
